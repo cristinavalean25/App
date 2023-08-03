@@ -1,14 +1,19 @@
-/* eslint-disable prettier/prettier */
 import React, {useState, useEffect} from 'react';
 import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 import Product from './Product';
 import {ProductProps} from '../types/Product';
+import {useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '../types/RootStackParamList';
+import {RouteProp, useRoute} from '@react-navigation/native';
+
+// type ProductPageRouteProp = RouteProp<RootStackParamList, 'ProductPage'>;
 
 function Products() {
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
   const [selectedCategory, setSelectedCategory] = useState('');
+  const navigation = useNavigation();
 
   useEffect(() => {
     axios
@@ -35,10 +40,21 @@ function Products() {
     setSelectedCategory('');
   };
 
+  // const handleShowDetails = (productId: number) => {
+  //   navigation.navigate('ProductPage', {productId});
+  // };
+
   return (
     <View style={styles.container}>
       {filteredProducts.map(product => (
-        <Product key={product.id} {...product} images={product.images || []} />
+        <Product
+          handleShowDetails={function (): void {
+            throw new Error('Function not implemented.');
+          }}
+          key={product.id}
+          {...product}
+          images={product.images || []} // handleShowDetails={() => handleShowDetails(product.id)}
+        />
       ))}
       {!selectedCategory && (
         <TouchableOpacity

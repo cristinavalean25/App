@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
 import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 
 interface ProductComponentProps {
   id: number;
@@ -8,22 +9,30 @@ interface ProductComponentProps {
   images: string[];
   category: string;
   price: number;
+  handleShowDetails: () => void;
 }
 
 const Product: React.FC<ProductComponentProps> = ({
+  id,
   title,
   images,
   category,
   price,
 }) => {
   const [showDetails, setShowDetails] = useState(false);
+  const navigation = useNavigation<any>();
 
-  const handleShowDetails = () => {
+  const handleToggleDetails = () => {
     setShowDetails(!showDetails);
   };
+
+  const handleGoToProductPage = () => {
+    navigation.navigate('ProductPage', {productId: id});
+  };
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleShowDetails}>
+      <TouchableOpacity onPress={handleToggleDetails}>
         <Image source={{uri: images[0]}} style={styles.imageContainer} />
         <Text style={styles.title}>{title}</Text>
       </TouchableOpacity>
@@ -32,9 +41,11 @@ const Product: React.FC<ProductComponentProps> = ({
         <View>
           <Text style={styles.title}>{category}</Text>
           <Text style={styles.title}>$ {price}</Text>
-          <View style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>Add to cart</Text>
-          </View>
+          <TouchableOpacity
+            onPress={handleGoToProductPage}
+            style={styles.buttonContainer}>
+            <Text style={styles.buttonText}>More details</Text>
+          </TouchableOpacity>
         </View>
       )}
     </View>

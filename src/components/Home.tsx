@@ -10,7 +10,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../types/RootStackParamList';
 
-type HomeProps = {
+export type HomeProps = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 };
 

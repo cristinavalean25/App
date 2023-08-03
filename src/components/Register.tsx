@@ -1,91 +1,89 @@
-/* eslint-disable prettier/prettier */
+import {StackNavigationProp} from '@react-navigation/stack';
 import React, {useState} from 'react';
-import Navbar from './Navbar';
 import {
-  Text,
-  View,
   StyleSheet,
+  Text,
   TextInput,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../types/RootStackParamList';
+import Navbar from './Navbar';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-type LoginProps = {
-  navigation: StackNavigationProp<RootStackParamList, 'Login'>;
+type RegisterProps = {
+  navigation: StackNavigationProp<RootStackParamList, 'Register'>;
 };
 
-function Login({navigation}: LoginProps) {
-  const [email, setEmail] = useState('');
+function Register({navigation}: RegisterProps) {
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
   const handleRegisterClick = () => {
-    navigation.navigate('Register');
+    navigation.navigate('Login');
   };
+
   return (
     <>
-      <Navbar
-        navigation={
-          navigation as StackNavigationProp<RootStackParamList, 'Home'>
-        }
-      />
       <SafeAreaView>
+        <Navbar
+          navigation={
+            navigation as StackNavigationProp<RootStackParamList, 'Home'>
+          }
+        />
         <View style={styles.leftContainer}>
-          <Text style={styles.login}>Login</Text>
-          <Text style={styles.lets}>
-            Welcome back, please login to your accSount
-          </Text>
+          <Text style={styles.register}>Register</Text>
+          <Text style={styles.lets}>Lets get you on board</Text>
         </View>
         <View style={styles.bigContainer}>
           <TextInput
             style={styles.input}
-            placeholder="Email"
-            value={email}
-            onChangeText={setEmail}
+            placeholder="Full name"
+            value={name}
+            onChangeText={setName}
           />
+          <TextInput style={styles.input} placeholder="Email" />
           <TextInput
             style={styles.input}
             placeholder="Password"
             value={password}
             onChangeText={setPassword}
           />
-          <Text style={styles.forget}>Forget Password?</Text>
           <TouchableOpacity>
-            <Text style={styles.btnLogin}>Login</Text>
+            <Text style={styles.btnRegister}>Register</Text>
           </TouchableOpacity>
-        </View>
-        <View style={styles.or}>
-          <View style={styles.orLeft}></View>
-          <Text style={styles.text}>or</Text>
-          <View style={styles.orRight}></View>
-        </View>
-        <View style={styles.socialMediaButtons}>
-          <TouchableOpacity style={styles.socialButton}>
-            <Icon
-              name="google"
-              size={20}
-              color="#f5af19"
-              style={styles.socialIcon}
-            />
-            <Text>Google</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.socialButton}>
-            <Icon
-              name="facebook-square"
-              size={20}
-              style={styles.socialIcon}
-              color="blue"
-            />
-            <Text>Facebook</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.socialMediaButtons}>
-          <Text>Alredy have an account? </Text>
-          <TouchableOpacity onPress={handleRegisterClick}>
-            <Text style={styles.registerText}>Regiter</Text>
-          </TouchableOpacity>
+          <View style={styles.or}>
+            <View style={styles.orLeft}></View>
+            <Text style={styles.text}>or</Text>
+            <View style={styles.orRight}></View>
+          </View>
+          <View style={styles.socialMediaButtons}>
+            <TouchableOpacity style={styles.socialButtonRegister}>
+              <Icon
+                name="google"
+                size={20}
+                color="#f5af19"
+                style={styles.socialIcon}
+              />
+              <Text>Google</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.socialButtonRegister}>
+              <Icon
+                name="facebook-square"
+                size={20}
+                style={styles.socialIcon}
+                color="blue"
+              />
+              <Text>Facebook</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.socialMediaButtons}>
+            <Text>Alredy have an account? </Text>
+            <TouchableOpacity onPress={handleRegisterClick}>
+              <Text style={styles.loginText}>Sign in </Text>
+            </TouchableOpacity>
+          </View>
         </View>
       </SafeAreaView>
     </>
@@ -99,16 +97,16 @@ const styles = StyleSheet.create({
     marginLeft: 50,
     marginTop: 50,
   },
-  login: {
+  register: {
     fontSize: 30,
     color: '#000',
     fontWeight: '700',
     paddingBottom: 10,
   },
   lets: {
-    fontSize: 17,
-    width: 150,
-    color: 'grey',
+    fontSize: 15,
+    width: 100,
+    color: '#000',
     padding: 5,
   },
   bigContainer: {
@@ -128,7 +126,7 @@ const styles = StyleSheet.create({
     marginBottom: 16,
   },
 
-  btnLogin: {
+  btnRegister: {
     width: 300,
     height: 45,
     backgroundColor: 'blue',
@@ -139,10 +137,6 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     marginTop: 20,
     paddingTop: 7,
-  },
-  forget: {
-    textAlign: 'right',
-    color: 'blue',
   },
   or: {
     width: '100%',
@@ -171,14 +165,15 @@ const styles = StyleSheet.create({
     borderColor: 'grey',
   },
   socialMediaButtons: {
+    flexDirection: 'row',
+    width: '80%',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    flexDirection: 'row',
     marginTop: 50,
   },
-  socialButton: {
-    width: '40%',
+  socialButtonRegister: {
+    width: '45%',
     height: 45,
     flexDirection: 'row',
     borderRadius: 5,
@@ -191,9 +186,9 @@ const styles = StyleSheet.create({
   socialIcon: {
     marginRight: 10,
   },
-  registerText: {
+  loginText: {
     color: 'blue',
   },
 });
 
-export default Login;
+export default Register;
