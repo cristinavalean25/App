@@ -118,6 +118,7 @@ const ProductPage: React.FC = () => {
 
 const styles = StyleSheet.create({
   firstContainer: {
+    backgroundColor: '#fff',
     width: '100%',
     marginTop: 20,
     display: 'flex',

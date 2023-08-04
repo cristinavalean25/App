@@ -47,7 +47,7 @@ function Cart({navigation}: CartProps) {
 
   return (
     <>
-      <SafeAreaView>
+      <SafeAreaView style={styles.container}>
         <ScrollView>
           <Navbar
             navigation={
@@ -85,7 +85,7 @@ function Cart({navigation}: CartProps) {
               </View>
             ))}
             <View>
-              <Text>Total cart: $ {total}</Text>
+              <Text style={styles.totalCart}>Total cart: $ {total}</Text>
             </View>
           </View>
         </ScrollView>
@@ -95,41 +95,48 @@ function Cart({navigation}: CartProps) {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#E6F1FF',
+  },
   cartContainer: {
     width: '100%',
-    height: 'auto',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
     marginVertical: 10,
+    paddingHorizontal: 10,
   },
   cartItem: {
-    display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginVertical: 10,
+    height: 150,
+    backgroundColor: '#fff',
+    borderRadius: 5,
+    paddingHorizontal: 10,
   },
   imageContainer: {
-    width: 100,
-    height: 100,
-    marginVertical: 10,
+    width: 80,
+    height: 80,
+    marginRight: 10,
   },
   cartTitle: {
     fontSize: 25,
     fontWeight: '700',
     color: '#000',
     padding: 10,
+    textAlign: 'center',
   },
   itemDetails: {
+    flex: 1,
     marginLeft: 10,
   },
   textDetails: {
-    fontSize: 24,
+    fontSize: 18,
   },
   quantityContainer: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginTop: 5,
   },
   quantityInput: {
     width: 50,
@@ -143,27 +150,24 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   removeButton: {
-    fontSize: 20,
-    color: '#fff',
-    fontWeight: '700',
-    textAlign: 'center',
-    borderWidth: 1,
-    borderColor: '#FF0000',
-    borderRadius: 5,
+    width: 200,
+    justifyContent: 'center',
+    alignItems: 'center',
     backgroundColor: '#FF0000',
+    borderRadius: 5,
+    paddingHorizontal: 10,
     paddingVertical: 5,
     marginTop: 5,
   },
-  updateButton: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: 'blue',
-    borderRadius: 5,
+  buttonText: {
+    color: '#fff',
+    fontSize: 16,
+    fontWeight: '700',
   },
-  updateButtonText: {
-    color: 'white',
-    fontSize: 18,
-    fontWeight: 'bold',
+  totalCart: {
+    fontSize: 20,
+    color: '#000',
+    textAlign: 'center',
   },
 });
 
