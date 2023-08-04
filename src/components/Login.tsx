@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Linking,
 } from 'react-native';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../types/RootStackParamList';
@@ -24,6 +25,17 @@ function Login({navigation}: LoginProps) {
   const handleRegisterClick = () => {
     navigation.navigate('Register');
   };
+
+  const handleGoogleLogin = () => {
+    const googleUrl = 'https://accounts.google.com/';
+    Linking.openURL(googleUrl);
+  };
+
+  const handleFacebookLogin = () => {
+    const facebookUrl = 'https://www.facebook.com/';
+    Linking.openURL(facebookUrl);
+  };
+
   return (
     <>
       <Navbar
@@ -35,7 +47,7 @@ function Login({navigation}: LoginProps) {
         <View style={styles.leftContainer}>
           <Text style={styles.login}>Login</Text>
           <Text style={styles.lets}>
-            Welcome back, please login to your accSount
+            Welcome back, please login to your account
           </Text>
         </View>
         <View style={styles.bigContainer}>
@@ -62,7 +74,9 @@ function Login({navigation}: LoginProps) {
           <View style={styles.orRight}></View>
         </View>
         <View style={styles.socialMediaButtons}>
-          <TouchableOpacity style={styles.socialButton}>
+          <TouchableOpacity
+            style={styles.socialButton}
+            onPress={handleGoogleLogin}>
             <Icon
               name="google"
               size={20}
@@ -71,7 +85,9 @@ function Login({navigation}: LoginProps) {
             />
             <Text>Google</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.socialButton}>
+          <TouchableOpacity
+            style={styles.socialButton}
+            onPress={handleFacebookLogin}>
             <Icon
               name="facebook-square"
               size={20}

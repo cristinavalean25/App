@@ -1,6 +1,5 @@
 import {createContext, useContext, ReactNode, useState, useEffect} from 'react';
 import {ProductProps} from '../types/Product';
-import Product from '../Produse/Product';
 
 export interface ProductItemProps {
   product: ProductProps;
@@ -14,6 +13,9 @@ const ShoppingCartContext = createContext<{
   addToFavorite: (product: ProductProps) => void;
   removeFromFavorite: (productId: number) => void;
   favorite: ProductProps[];
+  productId: number | null;
+  setProductId: (productId: number) => void;
+  updateTotal: (newTotal: number) => void;
 }>({
   cart: [],
   total: 0,
@@ -22,11 +24,15 @@ const ShoppingCartContext = createContext<{
   addToFavorite: () => {},
   removeFromFavorite: () => {},
   favorite: [],
+  productId: null,
+  setProductId: () => {},
+  updateTotal: () => {},
 });
 
 const ShoppingCartProvider = ({children}: {children: ReactNode}) => {
   const [cart, setCart] = useState<{product: ProductProps; qty: number}[]>([]);
   const [total, setTotal] = useState<number>(0);
+  const [productId, setProductId] = useState<number | null>(null);
   const [favorite, setFavorite] = useState<ProductProps[]>([]);
 
   useEffect(() => {
@@ -74,6 +80,9 @@ const ShoppingCartProvider = ({children}: {children: ReactNode}) => {
     const newFavorite = favorite.filter(favProd => favProd.id !== productId);
     setFavorite(newFavorite);
   };
+  const updateTotal = (newTotal: number) => {
+    setTotal(newTotal);
+  };
 
   return (
     <ShoppingCartContext.Provider
@@ -85,6 +94,9 @@ const ShoppingCartProvider = ({children}: {children: ReactNode}) => {
         addToFavorite,
         removeFromFavorite,
         favorite,
+        productId,
+        setProductId,
+        updateTotal,
       }}>
       {children}
     </ShoppingCartContext.Provider>

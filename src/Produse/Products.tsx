@@ -3,17 +3,11 @@ import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
 import axios from 'axios';
 import Product from './Product';
 import {ProductProps} from '../types/Product';
-import {useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '../types/RootStackParamList';
-import {RouteProp, useRoute} from '@react-navigation/native';
-
-// type ProductPageRouteProp = RouteProp<RootStackParamList, 'ProductPage'>;
 
 function Products() {
   const [products, setProducts] = useState<ProductProps[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<ProductProps[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const navigation = useNavigation();
+  const [selectedCategory, setSelectedCategory] = useState<string>('');
 
   useEffect(() => {
     axios
@@ -40,29 +34,37 @@ function Products() {
     setSelectedCategory('');
   };
 
-  // const handleShowDetails = (productId: number) => {
-  //   navigation.navigate('ProductPage', {productId});
-  // };
+  const handleCategoryFilter = (category: string) => {
+    setSelectedCategory(category);
+  };
+
+  const uniqueCategories = Array.from(new Set(products.map(p => p.category)));
 
   return (
     <View style={styles.container}>
-      {filteredProducts.map(product => (
-        <Product
-          handleShowDetails={function (): void {
-            throw new Error('Function not implemented.');
-          }}
-          key={product.id}
-          {...product}
-          images={product.images || []} // handleShowDetails={() => handleShowDetails(product.id)}
-        />
-      ))}
-      {!selectedCategory && (
+      <View style={styles.buttonsContainer}>
         <TouchableOpacity
-          style={styles.showAllButton}
+          style={[styles.button, !selectedCategory && styles.selectedButton]}
           onPress={handleShowAllProducts}>
-          <Text style={styles.showAllButtonText}>Toate produsele</Text>
+          <Text style={styles.buttonText}>Toate produsele</Text>
         </TouchableOpacity>
-      )}
+        {uniqueCategories.map(category => (
+          <TouchableOpacity
+            key={category}
+            style={[
+              styles.button,
+              selectedCategory === category && styles.selectedButton,
+            ]}
+            onPress={() => handleCategoryFilter(category)}>
+            <Text style={styles.buttonText}>{category}</Text>
+          </TouchableOpacity>
+        ))}
+      </View>
+      <View style={styles.containerProducts}>
+        {filteredProducts.map(product => (
+          <Product key={product.id} {...product} />
+        ))}
+      </View>
     </View>
   );
 }
@@ -70,19 +72,32 @@ function Products() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    marginTop: 20,
+  },
+  buttonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    margin: 10,
+  },
+  button: {
+    borderWidth: 1,
+    borderColor: '#999',
+    borderRadius: 5,
+    padding: 8,
+    margin: 5,
+  },
+  selectedButton: {
+    backgroundColor: '#1E90FF',
+  },
+  buttonText: {
+    fontSize: 16,
+  },
+  containerProducts: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 10,
-  },
-  showAllButton: {
-    marginTop: 10,
-    padding: 10,
-    backgroundColor: '#99A3A4',
-    borderRadius: 5,
-  },
-  showAllButtonText: {
-    color: 'white',
-    fontWeight: 'bold',
   },
 });
 

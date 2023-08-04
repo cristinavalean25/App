@@ -18,6 +18,7 @@ export interface Product {
   brand: string;
   price: number;
   images: string[];
+  discountPercentage: number;
 }
 
 export type RootStackParamList = {
@@ -55,6 +56,12 @@ const ProductPage: React.FC = () => {
     navigation.goBack();
   };
 
+  // const handleAddToFavorites = () => {
+  //   if (product) {
+  //     setProductId(product.id);
+  //   }
+  // };
+
   const renderItem = ({item}: {item: string}) => {
     return (
       <View>
@@ -82,19 +89,21 @@ const ProductPage: React.FC = () => {
                 <Text style={styles.textH}>{product.brand}</Text>
                 <Text style={styles.textH}>$ {product.price}</Text>
                 <Text style={styles.text}>{product.description}</Text>
+                <Text style={styles.text}>{product.description}</Text>
+                <Text style={styles.text}>{product.description}</Text>
               </View>
             )}
 
-            <TouchableOpacity
-              style={styles.buttonContainer}
-              onPress={() => product && addProduct(product)}>
-              <Text>Add to cart</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.buttonContainer}
-              onPress={handleGoBack}>
-              <Text>Go back</Text>
-            </TouchableOpacity>
+            <View style={styles.buttonContainer}>
+              <TouchableOpacity
+                style={styles.buttonAdd}
+                onPress={() => product && addProduct(product)}>
+                <Text style={styles.textBtn}>Add to cart</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.buttonAdd} onPress={handleGoBack}>
+                <Text style={styles.textBtn}>Go back</Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </ScrollView>
         <BottomNavbar />
@@ -112,16 +121,23 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   buttonContainer: {
-    padding: 10,
-    backgroundColor: '#99A3A4',
+    width: '100%',
+    height: 120,
+    flexDirection: 'row',
+    marginTop: 10,
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+  buttonAdd: {
+    backgroundColor: '#1E90FF',
     borderRadius: 5,
-    width: '50%',
-    marginBottom: 0,
-    marginVertical: 5,
+    width: '40%',
+    height: 40,
+    marginLeft: 5,
+    textAlign: 'center',
   },
   details: {
     width: '100%',
-    height: 'auto',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
@@ -143,6 +159,12 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     marginRight: 10,
     padding: 5,
+  },
+  textBtn: {
+    fontSize: 20,
+    color: '#fff',
+    textAlign: 'center',
+    paddingTop: 5,
   },
 });
 

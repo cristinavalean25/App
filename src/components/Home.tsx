@@ -3,7 +3,7 @@ import React from 'react';
 import {SafeAreaView, ScrollView, useColorScheme} from 'react-native';
 import Navbar from './Navbar';
 import Slider from './Slider';
-import Meniu from './Meniu';
+//import Meniu from './Meniu';
 import Products from '../Produse/Products';
 import BottonNavbar from '../BottonNavbar';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -26,7 +26,7 @@ function Home({navigation}: HomeProps) {
         style={backgroundStyle}>
         <Navbar navigation={navigation} />
         <Slider />
-        <Meniu />
+        {/* <Meniu /> */}
         <Products />
       </ScrollView>
       <BottonNavbar />

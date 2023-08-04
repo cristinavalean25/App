@@ -1,6 +1,5 @@
-/* eslint-disable prettier/prettier */
 import React, {useState} from 'react';
-import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native';
+import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 interface ProductComponentProps {
@@ -9,22 +8,15 @@ interface ProductComponentProps {
   images: string[];
   category: string;
   price: number;
-  handleShowDetails: () => void;
 }
 
 const Product: React.FC<ProductComponentProps> = ({
   id,
   title,
   images,
-  category,
   price,
 }) => {
-  const [showDetails, setShowDetails] = useState(false);
   const navigation = useNavigation<any>();
-
-  const handleToggleDetails = () => {
-    setShowDetails(!showDetails);
-  };
 
   const handleGoToProductPage = () => {
     navigation.navigate('ProductPage', {productId: id});
@@ -32,53 +24,63 @@ const Product: React.FC<ProductComponentProps> = ({
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleToggleDetails}>
-        <Image source={{uri: images[0]}} style={styles.imageContainer} />
+      <View style={styles.imageContainer}>
+        <Image source={{uri: images[0]}} style={styles.image} />
+      </View>
+      <View style={styles.productDetails}>
         <Text style={styles.title}>{title}</Text>
-      </TouchableOpacity>
-
-      {showDetails && (
-        <View>
-          <Text style={styles.title}>{category}</Text>
-          <Text style={styles.title}>$ {price}</Text>
-          <TouchableOpacity
-            onPress={handleGoToProductPage}
-            style={styles.buttonContainer}>
-            <Text style={styles.buttonText}>More details</Text>
-          </TouchableOpacity>
-        </View>
-      )}
+        <Text style={styles.price}>$ {price}</Text>
+        <TouchableOpacity
+          onPress={handleGoToProductPage}
+          style={styles.buttonContainer}>
+          <Text style={styles.buttonText}>More details</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginVertical: 10,
+    marginHorizontal: 20,
+  },
+  imageContainer: {
     flex: 1,
+    marginRight: 10,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    resizeMode: 'contain',
+  },
+  productDetails: {
+    flex: 2,
   },
   title: {
     textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
-  imageContainer: {
-    width: 200,
-    height: 200,
-    margin: 10,
+  price: {
+    textAlign: 'center',
+    fontSize: 16,
+    color: '#888',
+    marginBottom: 10,
   },
   buttonContainer: {
     alignItems: 'center',
     justifyContent: 'center',
-    margin: 5,
+    backgroundColor: '#4169E1',
+    borderRadius: 5,
+    padding: 7,
   },
   buttonText: {
-    width: 100,
-    height: 30,
-    backgroundColor: 'blue',
-    borderRadius: 5,
-    borderWidth: 1,
-    textAlign: 'center',
-    margin: 3,
-    fontSize: 17,
-    color: '#fff',
+    color: 'white',
+    fontSize: 16,
   },
 });
 

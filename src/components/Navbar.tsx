@@ -50,7 +50,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    backgroundColor: '#EF8210',
+    backgroundColor: '#1E90FF',
   },
   image: {
     width: 100,

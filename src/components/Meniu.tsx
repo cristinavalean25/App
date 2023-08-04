@@ -4,6 +4,8 @@ import {StyleSheet, Text, View, TouchableOpacity, Image} from 'react-native';
 import axios from 'axios';
 import {useNavigation} from '@react-navigation/native';
 import {NavigationProp} from '@react-navigation/native';
+import {useShoppingCart} from '../ShoppingCart';
+import {ProductProps} from '../types/Product';
 
 interface Product {
   id: number;
@@ -14,6 +16,7 @@ interface Product {
 }
 
 function Meniu() {
+  const {addProduct} = useShoppingCart();
   const navigation = useNavigation<NavigationProp<any>>();
   const [products, setProducts] = useState<Product[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Product[]>([]);
@@ -87,6 +90,13 @@ function Meniu() {
               <Text>{product.title}</Text>
               <Text style={styles.price}>${product.price}</Text>
               <Text>{product.category}</Text>
+              <TouchableOpacity
+                style={styles.buttonAdd}
+                onPress={() =>
+                  product && addProduct(product as unknown as ProductProps)
+                }>
+                <Text>Add to cart</Text>
+              </TouchableOpacity>
             </View>
           </TouchableOpacity>
         ))}
@@ -135,6 +145,13 @@ const styles = StyleSheet.create({
   },
   price: {
     fontWeight: 'bold',
+  },
+  buttonAdd: {
+    width: 100,
+    height: 30,
+    backgroundColor: '#F0FFFF',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 });
 
