@@ -1,5 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {StyleSheet, View, Text, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import axios from 'axios';
 import Product from './Product';
 import {ProductProps} from '../types/Product';
@@ -60,11 +66,11 @@ function Products() {
           </TouchableOpacity>
         ))}
       </View>
-      <View style={styles.containerProducts}>
+      <ScrollView contentContainerStyle={styles.containerProducts}>
         {filteredProducts.map(product => (
           <Product key={product.id} {...product} />
         ))}
-      </View>
+      </ScrollView>
     </View>
   );
 }
@@ -82,10 +88,12 @@ const styles = StyleSheet.create({
   },
   button: {
     borderWidth: 1,
-    borderColor: '#999',
+    borderColor: '#fff',
     borderRadius: 5,
     padding: 8,
     margin: 5,
+    elevation: 3,
+    backgroundColor: '#fff',
   },
   selectedButton: {
     backgroundColor: '#1E90FF',
@@ -94,10 +102,11 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   containerProducts: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 5,
   },
 });
 

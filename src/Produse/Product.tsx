@@ -1,5 +1,12 @@
 import React, {useState} from 'react';
-import {StyleSheet, View, Text, Image, TouchableOpacity} from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Dimensions,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 
 interface ProductComponentProps {
@@ -23,34 +30,32 @@ const Product: React.FC<ProductComponentProps> = ({
   };
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity onPress={handleGoToProductPage} style={styles.container}>
       <View style={styles.imageContainer}>
         <Image source={{uri: images[0]}} style={styles.image} />
       </View>
       <View style={styles.productDetails}>
-        <Text style={styles.title}>{title}</Text>
         <Text style={styles.price}>$ {price}</Text>
-        <TouchableOpacity
-          onPress={handleGoToProductPage}
-          style={styles.buttonContainer}>
-          <Text style={styles.buttonText}>More details</Text>
-        </TouchableOpacity>
+        <Text style={styles.title}>{title}</Text>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 
+const {width} = Dimensions.get('window');
+const itemWidth = (width - 20) / 2 - 10;
+
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    marginVertical: 10,
-    marginHorizontal: 20,
+    width: itemWidth,
+    backgroundColor: '#fff',
+    margin: 5,
+    borderRadius: 5,
+    elevation: 3,
   },
   imageContainer: {
-    flex: 1,
-    marginRight: 10,
+    marginTop: 10,
+    alignItems: 'center',
   },
   image: {
     width: 100,
@@ -58,7 +63,7 @@ const styles = StyleSheet.create({
     resizeMode: 'contain',
   },
   productDetails: {
-    flex: 2,
+    padding: 10,
   },
   title: {
     textAlign: 'center',

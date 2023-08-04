@@ -98,7 +98,7 @@ function Login({navigation}: LoginProps) {
           </TouchableOpacity>
         </View>
         <View style={styles.socialMediaButtons}>
-          <Text>Alredy have an account? </Text>
+          <Text>Don't have an account? </Text>
           <TouchableOpacity onPress={handleRegisterClick}>
             <Text style={styles.registerText}>Regiter</Text>
           </TouchableOpacity>

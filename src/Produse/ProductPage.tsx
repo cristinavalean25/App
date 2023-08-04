@@ -56,6 +56,10 @@ const ProductPage: React.FC = () => {
     navigation.goBack();
   };
 
+  const backgroundStyle = {
+    backgroundColor: '#E6F1FF',
+  };
+
   // const handleAddToFavorites = () => {
   //   if (product) {
   //     setProductId(product.id);
@@ -72,7 +76,7 @@ const ProductPage: React.FC = () => {
 
   return (
     <>
-      <SafeAreaView style={{flex: 1}}>
+      <SafeAreaView style={backgroundStyle}>
         <ScrollView>
           <Navbar navigation={navigation} />
           <View style={styles.firstContainer}>
