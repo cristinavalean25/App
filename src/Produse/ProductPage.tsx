@@ -19,6 +19,7 @@ export interface Product {
   price: number;
   images: string[];
   discountPercentage: number;
+  isFavorite: boolean;
 }
 
 export type RootStackParamList = {
@@ -35,6 +36,8 @@ const ProductPage: React.FC = () => {
   const [images, setImages] = useState<string[]>([]);
   const {addProduct} = useShoppingCart();
 
+  const [isFavorite, setIsFavorite] = useState(false);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -43,6 +46,7 @@ const ProductPage: React.FC = () => {
         );
         setProduct(response.data);
         setImages(response.data.images);
+        setIsFavorite(response.data.isFavorite);
         console.log(response.data);
       } catch (error) {
         console.log(error);
@@ -60,11 +64,11 @@ const ProductPage: React.FC = () => {
     backgroundColor: '#E6F1FF',
   };
 
-  // const handleAddToFavorites = () => {
-  //   if (product) {
-  //     setProductId(product.id);
-  //   }
-  // };
+  const handleAddToFavorites = () => {
+    if (product) {
+      setIsFavorite(prevIsFavorite => !prevIsFavorite);
+    }
+  };
 
   const renderItem = ({item}: {item: string}) => {
     return (
@@ -97,7 +101,15 @@ const ProductPage: React.FC = () => {
                 <Text style={styles.text}>{product.description}</Text>
               </View>
             )}
-
+            <View style={styles.buttonContainerFavorite}>
+              <TouchableOpacity
+                style={[styles.buttonAdd, isFavorite && styles.favoriteButton]}
+                onPress={handleAddToFavorites}>
+                <Text style={styles.textBtn}>
+                  {isFavorite ? 'Remove favorites' : 'Add to favorites'}
+                </Text>
+              </TouchableOpacity>
+            </View>
             <View style={styles.buttonContainer}>
               <TouchableOpacity
                 style={styles.buttonAdd}
@@ -132,6 +144,24 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignContent: 'center',
     justifyContent: 'center',
+  },
+  buttonContainerFavorite: {
+    width: '100%',
+    flexDirection: 'row',
+    marginTop: 10,
+    alignContent: 'center',
+    justifyContent: 'center',
+  },
+  buttonAddFavorite: {
+    backgroundColor: '#1E90FF',
+    borderRadius: 5,
+    width: '40%',
+    height: 40,
+    marginLeft: 5,
+    textAlign: 'center',
+  },
+  favoriteButton: {
+    backgroundColor: 'red',
   },
   buttonAdd: {
     backgroundColor: '#1E90FF',

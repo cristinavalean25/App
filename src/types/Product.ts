@@ -7,4 +7,5 @@ export interface ProductProps {
   brand: string;
   price: number;
   images: string[];
+  isFavorite: boolean;
 }
